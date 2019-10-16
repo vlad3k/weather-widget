@@ -1,9 +1,13 @@
 import React from "react";
-import OpenweathermapService from "../../services/openweathermap-service";
 
-import "./app.css";
 import Weather from "../weather/weather";
 import Spinner from "../spinner/spinner";
+import ErrorIndicator from "../error-indicator/error-indicator";
+
+import OpenweathermapService from "../../services/openweathermap-service";
+import cities from "../../data/cities";
+
+import "./app.css";
 
 export default class App extends React.Component {
   openweathermapService = new OpenweathermapService();
@@ -11,39 +15,54 @@ export default class App extends React.Component {
   state = {
     loading: true,
     error: false,
-    currentWeather: []
+    currentWeather: [],
+    count: 0
   };
 
   componentDidMount() {
-    this.updateWeather("London");
+    this.updateWeather();
+    this.interval = setInterval(this.updateWeather, 5000);
   }
 
   weatherLoaded = weather => {
-    this.setState({
+    this.setState(prevState => ({
       currentWeather: weather,
-      loading: false
+      loading: false,
+      count: prevState.count >= cities.length - 1 ? 0 : prevState.count + 1
+    }));
+  };
+
+  onError = err => {
+    clearInterval(this.interval);
+    this.setState({
+      loading: false,
+      error: true
     });
   };
 
-  updateWeather = cityName => {
+  updateWeather = () => {
+    const count = this.state.count;
+    const id = cities[count]["id"];
+
     this.openweathermapService
-      .getCurrentWeatherByCityName(cityName)
-      .then(this.weatherLoaded);
+      .getCurrentWeatherById(id)
+      .then(this.weatherLoaded)
+      .catch(this.onError);
   };
 
   render() {
-    const { currentWeather, loading, error } = this.state;
-
+    const { currentWeather, loading, error, count } = this.state;
+    const name = cities[count]["name"];
     const hasData = !(loading || error);
 
-    const errorMessage = error ? <p>Error</p> : null;
+    const errorMessage = error ? <ErrorIndicator /> : null;
     const spinner = loading ? <Spinner /> : null;
     const content = hasData ? (
-      <Weather currentWeather={currentWeather} />
+      <Weather currentWeather={currentWeather} name={name} />
     ) : null;
 
     return (
-      <div className="random-planet jumbotron rounded">
+      <div className="weather">
         {errorMessage}
         {spinner}
         {content}

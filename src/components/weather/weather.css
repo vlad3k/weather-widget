@@ -1,9 +1,12 @@
 .weather {
-  padding: 10px 20px;
+  position: relative;
+  padding: 25px 10px;
   font-family: Arial, Helvetica, sans-serif;
-  width: 180px;
-  min-height: 180px;
-  background-color: rgba(236, 237, 234, 0.4);
+  width: 210px;
+  min-height: 235px;
+  background-color: #008eff;
+  color: #fff;
+  overflow: hidden;
 }
 
 .weather__header {
@@ -14,21 +17,71 @@
   margin: 0;
   margin-bottom: 5px;
   padding: 0;
+  font-size: 22px;
+  transition: 500ms;
 }
 
 .weather__temp {
   display: flex;
-  justify-content: space-between;
-  padding-top: 35px;
-  font-size: 52px;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 36px;
+  min-height: 95px;
+  font-size: 60px;
+  white-space: nowrap;
+}
+
+.weather__temp-measure {
+  font-size: 20px;
+}
+.weather__temp-sign {
+  font-size: 35px;
+  line-height: 1.7;
+  vertical-align: top;
 }
 
 .weather__temp img {
+  width: 100%;
+  height: auto;
   margin-top: -20%;
+  font-size: 10px;
 }
 
 .weather__list {
   padding: 0;
   margin: 0;
   list-style-type: none;
+}
+
+.weather__list li {
+  margin-bottom: 5px;
+}
+
+.my-appear {
+  color: red;
+}
+
+.my-active-appear {
+  color: green;
+}
+
+.my-enter {
+  color: red;
+}
+
+.my-done-enter {
+  color: red;
+}
+
+.my-exit {
+  color: black;
+  transition: 500ms;
+}
+
+.my-active-exit {
+  color: black;
+}
+
+.my-done-exit {
+  color: gray;
 }

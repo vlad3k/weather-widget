@@ -2,45 +2,48 @@ import React from "react";
 
 import "./weather.css";
 
-const Weather = ({ currentWeather }) => {
-  const { name, weather, wind, main } = currentWeather;
-  console.log(main);
-  const currentTemp =
-    +main.temp > 0 ? `+${Math.round(main.temp)}` : Math.round(main.temp);
+// icons
+import DropIcon from "../../icons/Drop";
+import PressureIcon from "../../icons/Pressure";
+import WindIcon from "../../icons/Wind";
+
+const Weather = ({ currentWeather, name }) => {
+  const {
+    temp,
+    icon,
+    humidity,
+    windSpeed,
+    pressure,
+    tempSign
+  } = currentWeather;
+
   return (
-    <div className="weather">
+    <React.Fragment>
       <header className="weather__header">
         <h2 className="weather__title">{name}</h2>
       </header>
       <div className="weather__temp">
         <div>
-          {currentTemp}
-          <span>
-            <sup></sup>
-          </span>
+          <span className="weather__temp-sign">{tempSign}</span>
+          {temp}
+          <sup className="weather__temp-measure">°C</sup>
         </div>
         <div className="weather__icon">
-          <img
-            src={`http://openweathermap.org/img/wn/${
-              weather[0]["icon"]
-            }@2x.png`}
-            alt=""
-          />
+          <img src={icon} alt="weather icon" />
         </div>
       </div>
       <ul className="weather__list">
         <li>
-          <span>icon </span>
-          {main.humidity}%
+          <DropIcon width={15} height={15} /> {humidity}%
         </li>
         <li>
-          <span>icon </span> {Math.round(wind.speed)} м/с
+          <WindIcon width={15} height={15} /> {windSpeed} м/с
         </li>
         <li>
-          <span>icon </span> {Math.round(main.pressure)} мм рт. ст.
+          <PressureIcon width={15} height={15} /> {pressure} мм рт. ст.
         </li>
       </ul>
-    </div>
+    </React.Fragment>
   );
 };
 
