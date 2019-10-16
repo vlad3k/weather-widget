@@ -16,7 +16,8 @@ export default class App extends React.Component {
     loading: true,
     error: false,
     currentWeather: [],
-    count: 0
+    count: 0,
+    timeout: 4000
   };
 
   componentDidMount() {

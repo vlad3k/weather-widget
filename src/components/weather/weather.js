@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./weather.css";
 
@@ -45,6 +46,18 @@ const Weather = ({ currentWeather, name }) => {
       </ul>
     </React.Fragment>
   );
+};
+
+Weather.propTypes = {
+  currentWeather: PropTypes.shape({
+    temp: PropTypes.number.isRequired,
+    icon: PropTypes.string.isRequired,
+    humidity: PropTypes.number.isRequired,
+    windSpeed: PropTypes.number.isRequired,
+    pressure: PropTypes.number.isRequired,
+    tempSign: PropTypes.string.isRequired
+  }),
+  name: PropTypes.string.isRequired
 };
 
 export default Weather;
